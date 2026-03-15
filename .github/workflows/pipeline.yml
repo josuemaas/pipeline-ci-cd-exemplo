@@ -1,27 +1,49 @@
-name: Pipeline CI/CD
+name: Pipeline CI/CD Completo
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-
+  # ESTÁGIO 1: Build & Lint (Construção e Verificação)
   build:
+    name: Estágio de Build
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
+      - name: Simulando Instalação de Dependências
+        run: |
+          echo "Instalando bibliotecas..."
+          sleep 2
+          echo "Build finalizado com sucesso!"
+
+  # ESTÁGIO 2: Test (Testes Unitários)
   test:
+    name: Estágio de Testes
+    needs: build # Isso garante que só rode se o Build passar
     runs-on: ubuntu-latest
-    needs: build
-
     steps:
-    - run: echo "Executando testes"
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
+      - name: Executando Testes
+        run: |
+          echo "Rodando testes unitários..."
+          # Aqui entraria um comando real como 'pytest' ou 'npm test'
+          echo "Todos os testes passaram! (100% coverage)"
+
+  # ESTÁGIO 3: Deploy (Entrega/Implantação)
   deploy:
+    name: Estágio de Deploy
+    needs: test # Só roda se os Testes passarem
     runs-on: ubuntu-latest
-    needs: test
-
     steps:
-    - run: echo "Deploy realizado"
+      - name: Simulando Deploy em Produção
+        run: |
+          echo "Conectando ao servidor de produção..."
+          echo "Fazendo upload dos artefatos..."
+          echo "Aplicação online em: https://meu-app-exemplo.com"
