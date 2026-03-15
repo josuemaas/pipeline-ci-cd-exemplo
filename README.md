@@ -1,2 +1,2 @@
 # pipeline-ci-cd-exemplo
-Explolrando os recursos do CI/CD
+Explorando os recursos do CI/CD
